@@ -28,7 +28,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-30 border-b border-[var(--border)] bg-[var(--bg)]/40 backdrop-blur-2xl">
-      <nav className="mx-auto flex w-full max-w-6xl items-center gap-4 px-5 py-3.5 sm:px-8">
+      <nav className="mx-auto flex w-full max-w-6xl items-center gap-2 px-4 py-3.5 sm:gap-4 sm:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <span className="grid h-9 w-9 place-items-center rounded-xl cta-gradient shadow-lg shadow-[var(--accent)]/20">
             <NotebookPen size={18} strokeWidth={2.4} />
@@ -64,7 +64,10 @@ export default function Navbar() {
         </div>
 
         {/* search */}
-        <form onSubmit={submitSearch} className="relative ml-auto w-full max-w-xs">
+        <form
+          onSubmit={submitSearch}
+          className="relative ml-auto w-full min-w-0 max-w-xs"
+        >
           <Search
             size={15}
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-faint)]"

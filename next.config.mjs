@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  // Hide the on-screen Next.js dev tools indicator.
+  devIndicators: false,
 };
 
 export default nextConfig;

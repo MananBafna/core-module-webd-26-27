@@ -1,26 +1,182 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ */
+/*  Design tokens (values taken from the Stitch design system)         */
+/*  Dark is the default. .light overrides for the light theme.         */
+/* ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #131315;
+  --bg-soft: #1c1b1d;
+  --surface: rgba(255, 255, 255, 0.05);
+  --surface-strong: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.15);
+  --border-strong: rgba(208, 188, 255, 0.4);
+  --text: #e5e1e4;
+  --text-dim: #cbc3d7;
+  --text-faint: #958ea0;
+  --accent: #d0bcff;
+  --accent-strong: #a078ff;
+  --accent-2: #44e2cd;
+  --tertiary: #ffafd3;
+  --danger: #ffb4ab;
+  --blob-1: rgba(139, 92, 246, 0.18);
+  --blob-2: rgba(68, 226, 205, 0.1);
+  --bg-opacity-3d: 0.6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html.light {
+  --bg: #e7e4f0;
+  --bg-soft: #ffffff;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.95);
+  --border: rgba(30, 27, 45, 0.14);
+  --border-strong: rgba(85, 22, 190, 0.5);
+  --text: #161320;
+  --text-dim: #45415a;
+  --text-faint: #6a6678;
+  --accent: #6d3bd7;
+  --accent-strong: #5516be;
+  --accent-2: #0a9e8f;
+  --tertiary: #c01f73;
+  --danger: #c0241f;
+  --blob-1: rgba(109, 59, 215, 0.16);
+  --blob-2: rgba(3, 198, 178, 0.12);
+  --bg-opacity-3d: 0.5;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+}
+
+/* Geist for headings (technical precision), Inter for body (readability). */
+h1,
+h2,
+h3,
+h4,
+h5,
+.font-display {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(60rem 40rem at 12% -10%, var(--blob-1), transparent 60%),
+    radial-gradient(50rem 40rem at 100% 0%, var(--blob-2), transparent 55%);
+  background-attachment: fixed;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reusable building blocks                                           */
+/* ------------------------------------------------------------------ */
+@layer utilities {
+  .glass {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-strong {
+    background: var(--surface-strong);
+    border: 1px solid var(--border-strong);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+
+  /* Light mode is flat without elevation, so give the glass real shadows. */
+  html.light .glass {
+    box-shadow: 0 4px 18px rgba(30, 27, 45, 0.07);
+  }
+  html.light .glass-strong {
+    box-shadow: 0 16px 48px rgba(30, 27, 45, 0.16);
+  }
+
+  /* matches the Stitch primary gradient (135deg violet -> teal) */
+  .text-gradient {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .cta-gradient {
+    background: linear-gradient(135deg, #5516be 0%, #03c6b2 100%);
+    color: #ffffff;
+  }
+
+  .text-shimmer {
+    background: linear-gradient(
+      100deg,
+      var(--accent) 20%,
+      #ffffff 50%,
+      var(--accent-2) 80%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 6s linear infinite;
+  }
+
+  .label-meta {
+    font-family: var(--font-sans), sans-serif;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .focus-ring:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(208, 188, 255, 0.25);
+  }
+
+  /* search match highlight */
+  mark.hl {
+    background: rgba(208, 188, 255, 0.28);
+    color: var(--accent);
+    border-radius: 3px;
+    padding: 0 2px;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-strong);
+  background-clip: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-shimmer {
+    animation: none;
+  }
 }

@@ -64,7 +64,7 @@ export default function HomePage() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.05 }}
-          className="text-balance text-5xl font-extrabold leading-[1.05] tracking-tight sm:text-7xl"
+          className="text-balance text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl"
         >
           Capture ideas in <span className="text-gradient">Lumina</span>
         </motion.h1>

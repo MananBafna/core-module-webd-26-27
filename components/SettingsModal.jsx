@@ -62,8 +62,7 @@ export default function SettingsModal() {
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
             transition={{ type: "spring", stiffness: 300, damping: 26 }}
             onClick={(e) => e.stopPropagation()}
-            className="flex w-full max-w-2xl flex-col overflow-hidden rounded-2xl glass-strong shadow-2xl shadow-[var(--accent)]/10 sm:flex-row"
-            style={{ minHeight: "26rem" }}
+            className="flex max-h-[90vh] w-full max-w-2xl flex-col overflow-y-auto rounded-2xl glass-strong shadow-2xl shadow-[var(--accent)]/10 sm:max-h-[80vh] sm:min-h-[26rem] sm:flex-row sm:overflow-hidden"
           >
             {/* left nav */}
             <aside className="flex shrink-0 flex-col border-b border-[var(--border)] p-5 sm:w-56 sm:border-b-0 sm:border-r">

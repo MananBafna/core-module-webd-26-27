@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { Plus, Zap, Users, ArrowRight } from "lucide-react";
 import NoteCard from "@/components/NoteCard";
 import { useSocket } from "@/lib/socket";
+import { categoryColor } from "@/lib/format";
 
 export default function HomePage() {
   const [notes, setNotes] = useState([]);
@@ -138,19 +139,34 @@ export default function HomePage() {
         )}
       </section>
 
-      {/* Feature cards */}
-      <section
-        id="features"
-        className="mt-8 grid grid-cols-1 gap-4 scroll-mt-24 lg:grid-cols-3"
-      >
-        {/* large card with image background */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.4 }}
-          className="relative flex min-h-72 flex-col justify-end overflow-hidden rounded-2xl glass p-7 lg:col-span-2"
-        >
+      {/* Features */}
+      <section id="features" className="mt-14 scroll-mt-24">
+        <h2 className="mb-6 text-3xl font-bold tracking-tight">Features</h2>
+
+        {/* example note cards showcase */}
+        <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ExampleNote
+            category="Research"
+            title="How storage works"
+            body="Every note lives in memory on the server. Restart the dev server and the list resets to empty, by design."
+          />
+          <ExampleNote
+            category="Product"
+            title="Realtime by default"
+            body="Open Lumina in a second tab and watch your notes and edits sync between them instantly, with no refresh."
+          />
+        </div>
+
+        {/* bento feature cards */}
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {/* large card with image background */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.4 }}
+            className="relative flex min-h-72 flex-col justify-end overflow-hidden rounded-2xl glass p-7 lg:col-span-2"
+          >
           <Image
             src="/stitch/galaxy.png"
             alt=""
@@ -171,15 +187,47 @@ export default function HomePage() {
           </div>
         </motion.div>
 
-        {/* small dark card */}
-        <FeatureCard
-          icon={Zap}
-          title="Zero latency"
-          body="A socket layer keeps state in sync faster than you can blink, with no page reloads and no polling."
-          accent="var(--accent-2)"
-        />
+          {/* small dark card */}
+          <FeatureCard
+            icon={Zap}
+            title="Zero latency"
+            body="A socket layer keeps state in sync faster than you can blink, with no page reloads and no polling."
+            accent="var(--accent-2)"
+          />
+        </div>
       </section>
     </div>
+  );
+}
+
+// Static showcase card used in the Features section (not a real, editable note).
+function ExampleNote({ category, title, body }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.4 }}
+      className="flex flex-col rounded-2xl glass p-5"
+    >
+      <div className="mb-2 flex items-center gap-1.5">
+        <span
+          className="h-1.5 w-1.5 rounded-full"
+          style={{ background: categoryColor(category) }}
+        />
+        <span className="label-meta" style={{ color: categoryColor(category) }}>
+          {category}
+        </span>
+      </div>
+      <h3 className="text-lg font-semibold leading-snug">{title}</h3>
+      <p className="mt-2 flex-1 text-sm leading-relaxed text-[var(--text-dim)]">
+        {body}
+      </p>
+      <div className="mt-5 flex items-center justify-between border-t border-[var(--border)] pt-3 text-xs text-[var(--text-faint)]">
+        <span>just now</span>
+        <span className="label-meta">Example</span>
+      </div>
+    </motion.div>
   );
 }
 
